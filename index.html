@@ -1,62 +1,54 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Encoding and Decoding Analyzer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-
 <body>
-<div class="card">
+  <div class="card">
 
-  <h1 class="title">Encoding and Decoding Analyzer</h1>
+    <h1>Encoding and Decoding Analyzer</h1>
 
-  <!-- ================= INPUT ================= -->
-  <label for="fileInput">Upload Data File</label>
-  <input type="file" id="fileInput" accept=".txt">
+    <!-- ================= ENCODING ================= -->
+    <section class="section">
+      <h2>Encoding</h2>
 
-  <label for="textInput">Atau Masukkan Teks Manual</label>
-  <textarea id="textInput" placeholder="Masukkan teks di sini..."></textarea>
+      <label>Upload Data File</label>
+      <input type="file" id="fileInput" accept=".txt">
 
-  <label for="method">Pilih Metode Pengkodean</label>
-  <select id="method">
-    <option value="sf">Shannon–Fano</option>
-    <option value="hf">Huffman</option>
-    <option value="ext2">EXT2 Shannon–Fano</option>
-  </select>
+      <label>Masukkan Teks Manual</label>
+      <textarea id="textInput" placeholder="Masukkan teks di sini..."></textarea>
 
-  <button onclick="encodeProcess()">PROSES ENCODING</button>
+      <label>Pilih Metode Pengkodean</label>
+      <select id="method">
+        <option value="sf">Shannon–Fano</option>
+        <option value="hf">Huffman</option>
+        <option value="ext2">EXT2 Shannon–Fano</option>
+      </select>
 
-  <!-- ================= OUTPUT ================= -->
-  <h3>Bitstream Output</h3>
-  <div id="bitstream" class="output"></div>
-  <button onclick="downloadBits()">Download File Bit</button>
+      <button onclick="encodeProcess()">PROSES ENCODING</button>
 
-  <h3>Tabel Statistik</h3>
+      <h3>Bitstream Output</h3>
+      <div id="bitstream" class="output"></div>
+      <button class="secondary" onclick="downloadBits()">Download File Bit</button>
 
-  <div class="grid">
-    <div class="box">Entropi (H)<b id="H">-</b></div>
-    <div class="box">Rata-rata L<b id="L">-</b></div>
-    <div class="box">Efisiensi (%)<b id="E">-</b></div>
+      <h3>Codebook</h3>
+      <div id="codebook" class="output"></div>
+
+      <button class="secondary" onclick="downloadInfo()">Download Tabel Statistik</button>
+    </section>
+
+    <hr>
+
+    <!-- ================= DECODING ================= -->
+    <section class="section">
+      <h2>Decoding</h2>
+
+      <label>Upload Data File</label>
+      <input type="file" id="bitFile" accept=".txt">
+
+      <button onclick="decodeProcess()">PROSES DECODING</button>
+
+      <h3>Hasil Decoding</h3>
+      <div id="decodedText" class="output"></div>
+    </section>
+
   </div>
 
-  <button onclick="downloadInfo()">Download Tabel Statistik</button>
-
-  <!-- ================= DECODING ================= -->
-  <hr>
-
-  <h2>Decoding</h2>
-
-  <label for="bitFile">Upload Data File</label>
-  <input type="file" id="bitFile" accept=".txt">
-
-  <button onclick="decodeProcess()">PROSES DECODING</button>
-
-  <div id="decodedText" class="output"></div>
-
-</div>
-
-<script src="js/script.js"></script>
+  <script src="js/script.js"></script>
 </body>
-</html>
+
