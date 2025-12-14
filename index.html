@@ -8,47 +8,54 @@
 </head>
 
 <body>
-  <div class="card">
+
+  <div class="container">
 
     <h1>Encoding and Decoding Analyzer</h1>
 
-    <h2>Encoding</h2>
+    <!-- ================= ENCODING ================= -->
+    <section>
+      <h2>Encoding</h2>
 
-    <label>Upload Data File</label>
-    <input type="file" id="fileInput" accept=".txt">
+      <label>Upload Data File</label>
+      <input type="file" id="fileInput" accept=".txt">
 
-    <label>Masukkan Teks Manual</label>
-    <textarea id="textInput"></textarea>
+      <label>Masukkan Teks Manual</label>
+      <textarea id="textInput" placeholder="Masukkan teks di sini..."></textarea>
 
-    <label>Pilih Metode Pengkodean</label>
-    <select id="method">
-      <option value="sf">Shannon–Fano</option>
-      <option value="hf">Huffman</option>
-      <option value="ext2">EXT2 Shannon–Fano</option>
-    </select>
+      <label>Pilih Metode Pengkodean</label>
+      <select id="method">
+        <option value="sf">Shannon–Fano</option>
+        <option value="hf">Huffman</option>
+        <option value="ext2">EXT2 Shannon–Fano</option>
+      </select>
 
-    <button onclick="encodeProcess()">Proses Encoding</button>
+      <button onclick="encodeProcess()">PROSES ENCODING</button>
 
-    <h3>Bitstream Output</h3>
-    <div id="bitstream" class="output"></div>
+      <h3>Bitstream Output</h3>
+      <div id="bitstream" class="output"></div>
 
-    <button onclick="downloadBits()">Download File Bit</button>
+      <button onclick="downloadBits()">Download File Bit</button>
 
-    <h3>Codebook</h3>
-    <div id="codebook" class="output"></div>
+      <h3>Tabel Statistik</h3>
+      <div id="codebook" class="output"></div>
 
-    <button onclick="downloadInfo()">Download Tabel Statistik</button>
+      <button onclick="downloadInfo()">Download Tabel Statistik</button>
+    </section>
 
     <hr>
 
-    <h2>Decoding</h2>
+    <!-- ================= DECODING ================= -->
+    <section>
+      <h2>Decoding</h2>
 
-    <label>Upload Data File</label>
-    <input type="file" id="bitFile" accept=".txt">
+      <label>Upload Data File</label>
+      <input type="file" id="bitFile" accept=".txt">
 
-    <button onclick="decodeProcess()">Proses Decoding</button>
+      <button onclick="decodeProcess()">PROSES DECODING</button>
 
-    <div id="decodedText" class="output"></div>
+      <div id="decodedText" class="output"></div>
+    </section>
 
   </div>
 
