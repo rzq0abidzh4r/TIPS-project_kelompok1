@@ -1,135 +1,43 @@
-/* ================= BASE ================= */
-* {
-  box-sizing: border-box;
-}
-
 body {
-  margin: 0;
-  padding: 30px;
-  background: #eef2f7;
-  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-  color: #0f172a;
+  background: #f1f5f9;
+  font-family: Arial, sans-serif;
+  padding: 40px;
 }
 
-/* ================= CARD ================= */
 .card {
-  max-width: 900px;
+  max-width: 800px;
   margin: auto;
-  background: #ffffff;
-  padding: 32px;
-  border-radius: 18px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+  background: white;
+  padding: 30px;
+  border-radius: 14px;
 }
 
-/* ================= TITLES ================= */
 h1 {
   text-align: center;
-  font-size: 30px;
-  margin-bottom: 35px;
 }
 
-h2 {
-  font-size: 22px;
-  margin-bottom: 15px;
-}
-
-h3 {
-  font-size: 18px;
-  margin-top: 25px;
-}
-
-/* ================= SECTION ================= */
-.section {
-  margin-bottom: 35px;
-}
-
-/* ================= FORM ================= */
 label {
   display: block;
   margin-top: 15px;
-  font-weight: 600;
+  font-weight: bold;
 }
 
-textarea,
-input,
-select {
+input, textarea, select, button {
   width: 100%;
-  padding: 10px;
   margin-top: 6px;
-  border-radius: 8px;
-  border: 1px solid #cbd5e1;
-  font-size: 14px;
+  padding: 10px;
 }
 
-textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-/* ================= BUTTON ================= */
 button {
-  width: 100%;
   margin-top: 20px;
-  padding: 12px;
   background: #2563eb;
   color: white;
-  font-size: 16px;
-  font-weight: 600;
   border: none;
-  border-radius: 10px;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
 }
 
-button:hover {
-  background: #1e40af;
-}
-
-button:active {
-  transform: scale(0.98);
-}
-
-button.secondary {
-  background: #475569;
-  margin-top: 12px;
-}
-
-button.secondary:hover {
-  background: #334155;
-}
-
-/* ================= OUTPUT ================= */
 .output {
   background: #f8fafc;
-  padding: 12px;
-  border-radius: 10px;
-  font-family: "Courier New", monospace;
-  white-space: pre-wrap;
-  border: 1px solid #e5e7eb;
-  margin-top: 8px;
-  max-height: 220px;
-  overflow-y: auto;
+  margin-top: 10px;
+  padding: 10px;
 }
-
-/* ================= HR ================= */
-hr {
-  border: none;
-  border-top: 1px solid #e5e7eb;
-  margin: 40px 0;
-}
-
-/* ================= RESPONSIVE ================= */
-@media (max-width: 768px) {
-  body {
-    padding: 15px;
-  }
-
-  .card {
-    padding: 24px;
-  }
-
-  h1 {
-    font-size: 24px;
-  }
-}
-
