@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Encoding & Decoding Analyzer – TIPS</title>
+  <title>Encoding and Decoding Analyzer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -10,9 +10,10 @@
 <body>
 <div class="card">
 
-  <h1>📊 Encoding Analyzer – MK TIPS</h1>
+  <h1 class="title">Encoding and Decoding Analyzer</h1>
 
-  <label for="fileInput">Upload File Teks (≥ 1000 simbol ASCII)</label>
+  <!-- ================= INPUT ================= -->
+  <label for="fileInput">Upload Data File</label>
   <input type="file" id="fileInput" accept=".txt">
 
   <label for="textInput">Atau Masukkan Teks Manual</label>
@@ -27,36 +28,32 @@
 
   <button onclick="encodeProcess()">PROSES ENCODING</button>
 
+  <!-- ================= OUTPUT ================= -->
   <h3>Bitstream Output</h3>
   <div id="bitstream" class="output"></div>
   <button onclick="downloadBits()">Download File Bit</button>
 
-  <h3>Codebook</h3>
-  <div id="codebook" class="output"></div>
-
   <h3>Tabel Statistik</h3>
-  <div id="tableArea"></div>
-  <button onclick="downloadInfo()">Download File Informasi</button>
 
   <div class="grid">
-    <div class="box">Entropi (H)<br><b id="H">-</b></div>
-    <div class="box">Rata-rata L<br><b id="L">-</b></div>
-    <div class="box">Efisiensi (%)<br><b id="E">-</b></div>
+    <div class="box">Entropi (H)<b id="H">-</b></div>
+    <div class="box">Rata-rata L<b id="L">-</b></div>
+    <div class="box">Efisiensi (%)<b id="E">-</b></div>
   </div>
 
+  <button onclick="downloadInfo()">Download Tabel Statistik</button>
+
+  <!-- ================= DECODING ================= -->
   <hr>
 
-  <h2>🔁 Decoding</h2>
+  <h2>Decoding</h2>
 
-  <label for="bitFile">Upload File Bit untuk Decoding</label>
+  <label for="bitFile">Upload Data File</label>
   <input type="file" id="bitFile" accept=".txt">
 
   <button onclick="decodeProcess()">PROSES DECODING</button>
-  <div id="decodedText" class="output"></div>
 
-  <footer>
-    Tugas Proyek MK Teori Informasi & Pengkodean Sumber
-  </footer>
+  <div id="decodedText" class="output"></div>
 
 </div>
 
