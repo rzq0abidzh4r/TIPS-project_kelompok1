@@ -28,6 +28,7 @@ function shannonFano(freq) {
 
   function split(list) {
     if (list.length <= 1) return;
+
     const total = list.reduce((a,b) => a + b[1], 0);
     let acc = 0, idx = 0;
 
@@ -100,8 +101,8 @@ function encode(data, codes) {
 function decode(bits, codes) {
   const inv = {};
   Object.entries(codes).forEach(([k,v]) => inv[v] = k);
-  let buf = "", out = "";
 
+  let buf = "", out = "";
   for (const b of bits) {
     buf += b;
     if (inv[buf]) {
@@ -112,7 +113,7 @@ function decode(bits, codes) {
   return out;
 }
 
-/* ================= Perhitungan Teori ================= */
+/* ================= Statistik (untuk file download) ================= */
 function calculateStats(freq, codes, isEXT2) {
   let H = 0;
   let L = 0;
@@ -125,18 +126,15 @@ function calculateStats(freq, codes, isEXT2) {
     L += p * l;
   }
 
-  // EXT2: unit simbol = 2
   if (isEXT2) {
     H /= 2;
     L /= 2;
   }
 
-  const efficiency = (H / L) * 100;
-
   return {
     H: H.toFixed(4),
     L: L.toFixed(4),
-    E: efficiency.toFixed(2)
+    E: ((H / L) * 100).toFixed(2)
   };
 }
 
@@ -176,16 +174,12 @@ async function encodeProcess() {
   document.getElementById("bitstream").innerText = bits;
   document.getElementById("codebook").innerText =
     JSON.stringify(codes, null, 2);
-
-  const stats = calculateStats(f, codes, isEXT2);
-  document.getElementById("H").innerText = stats.H;
-  document.getElementById("L").innerText = stats.L;
-  document.getElementById("E").innerText = stats.E;
 }
 
 /* ================= Download ================= */
 function downloadBits() {
   if (!LAST_CODES) return alert("Belum ada hasil encoding");
+
   const blob = new Blob(
     [document.getElementById("bitstream").innerText],
     { type: "text/plain" }
@@ -206,7 +200,7 @@ Entropi (H)           : ${stats.H}
 Rata-rata panjang (L) : ${stats.L}
 Efisiensi (%)         : ${stats.E}
 
-Codebook:
+Tabel Statistik (Codebook):
 ${JSON.stringify(LAST_CODES, null, 2)}
 `;
 
@@ -221,7 +215,7 @@ ${JSON.stringify(LAST_CODES, null, 2)}
 async function decodeProcess() {
   const file = document.getElementById("bitFile").files[0];
   if (!file || !LAST_CODES) {
-    alert("File bit atau codebook belum tersedia");
+    alert("File bit atau hasil encoding belum tersedia");
     return;
   }
 
