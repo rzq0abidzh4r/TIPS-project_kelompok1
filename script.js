@@ -1,11 +1,9 @@
 "use strict";
 
+/* ================= GLOBAL ================= */
 let LAST_CODES = null;
-let LAST_FREQ = null;
-let LAST_DATA_LEN = 0;
-let LAST_EXT2 = false;
 
-/* ===================== UTIL ===================== */
+/* ================= UTIL ================= */
 function readFile(file) {
   return new Promise(resolve => {
     const reader = new FileReader();
@@ -20,7 +18,7 @@ function freq(data) {
   return f;
 }
 
-/* ================= Shannon–Fano ================= */
+/* ================= SHANNON–FANO ================= */
 function shannonFano(freq) {
   const items = Object.entries(freq).sort((a,b) => b[1] - a[1]);
   const codes = {};
@@ -59,7 +57,7 @@ function shannonFano(freq) {
   return codes;
 }
 
-/* ================= Huffman ================= */
+/* ================= HUFFMAN ================= */
 class Node {
   constructor(sym, freq, left=null, right=null) {
     this.sym = sym;
@@ -93,7 +91,7 @@ function huffman(freq) {
   return codes;
 }
 
-/* ================= Encode & Decode ================= */
+/* ================= ENCODE / DECODE ================= */
 function encode(data, codes) {
   return data.map(x => codes[x]).join("");
 }
@@ -113,77 +111,43 @@ function decode(bits, codes) {
   return out;
 }
 
-/* ================= Statistik (untuk file download) ================= */
-function calculateStats(freq, codes, isEXT2) {
-  let H = 0;
-  let L = 0;
-  const total = Object.values(freq).reduce((a,b) => a + b, 0);
-
-  for (const sym in freq) {
-    const p = freq[sym] / total;
-    const l = codes[sym].length;
-    H += -p * Math.log2(p);
-    L += p * l;
-  }
-
-  if (isEXT2) {
-    H /= 2;
-    L /= 2;
-  }
-
-  return {
-    H: H.toFixed(4),
-    L: L.toFixed(4),
-    E: ((H / L) * 100).toFixed(2)
-  };
-}
-
-/* ================= Main Process ================= */
+/* ================= MAIN PROCESS ================= */
 async function encodeProcess() {
   let text = document.getElementById("textInput").value;
   const file = document.getElementById("fileInput").files[0];
 
   if (file) text = await readFile(file);
-  if (!text || text.length < 1000) {
-    alert("Minimal 1000 simbol ASCII");
+  if (!text) {
+    alert("Data kosong");
     return;
   }
 
   const method = document.getElementById("method").value;
   let data = [...text];
-  let isEXT2 = false;
-
-  if (method === "ext2") {
-    const letters = data.filter(c => /[A-Za-z]/.test(c));
-    data = [];
-    for (let i = 0; i < letters.length - 1; i += 2) {
-      data.push(letters[i] + letters[i + 1]);
-    }
-    isEXT2 = true;
-  }
 
   const f = freq(data);
   const codes = (method === "hf") ? huffman(f) : shannonFano(f);
   const bits = encode(data, codes);
 
   LAST_CODES = codes;
-  LAST_FREQ = f;
-  LAST_DATA_LEN = data.length;
-  LAST_EXT2 = isEXT2;
 
   document.getElementById("bitstream").innerText = bits;
   document.getElementById("codebook").innerText =
     JSON.stringify(codes, null, 2);
 }
 
-/* ================= Download ================= */
+/* ================= DOWNLOAD ================= */
 function downloadBits() {
-  if (!LAST_CODES) return alert("Belum ada hasil encoding");
+  if (!LAST_CODES) {
+    alert("Belum ada hasil encoding");
+    return;
+  }
 
   const blob = new Blob(
     [document.getElementById("bitstream").innerText],
     { type: "text/plain" }
   );
+
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = "encoded_bits.txt";
@@ -191,31 +155,27 @@ function downloadBits() {
 }
 
 function downloadInfo() {
-  if (!LAST_CODES) return alert("Belum ada data");
+  if (!LAST_CODES) {
+    alert("Belum ada data");
+    return;
+  }
 
-  const stats = calculateStats(LAST_FREQ, LAST_CODES, LAST_EXT2);
-  const info =
-`Jumlah simbol        : ${LAST_DATA_LEN}
-Entropi (H)           : ${stats.H}
-Rata-rata panjang (L) : ${stats.L}
-Efisiensi (%)         : ${stats.E}
+  const blob = new Blob(
+    [JSON.stringify(LAST_CODES, null, 2)],
+    { type: "text/plain" }
+  );
 
-Tabel Statistik (Codebook):
-${JSON.stringify(LAST_CODES, null, 2)}
-`;
-
-  const blob = new Blob([info], { type: "text/plain" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = "encoding_info.txt";
+  a.download = "tabel_statistik.txt";
   a.click();
 }
 
-/* ================= Decode ================= */
+/* ================= DECODE ================= */
 async function decodeProcess() {
   const file = document.getElementById("bitFile").files[0];
   if (!file || !LAST_CODES) {
-    alert("File bit atau hasil encoding belum tersedia");
+    alert("File bit atau hasil encoding belum ada");
     return;
   }
 
